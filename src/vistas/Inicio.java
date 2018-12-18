@@ -127,6 +127,11 @@ public class Inicio extends javax.swing.JFrame {
         menu_materia.setLabel("Materias");
 
         sub_ver_materia.setText("Ver materias");
+        sub_ver_materia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sub_ver_materiaActionPerformed(evt);
+            }
+        });
         menu_materia.add(sub_ver_materia);
         menu_materia.add(sep1);
 
@@ -159,6 +164,11 @@ public class Inicio extends javax.swing.JFrame {
         menuRubricas.add(insertarRubrica);
 
         editarRubrica.setText("Editar rúbrica");
+        editarRubrica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editarRubricaActionPerformed(evt);
+            }
+        });
         menuRubricas.add(editarRubrica);
 
         barra_menu.add(menuRubricas);
@@ -222,6 +232,18 @@ public class Inicio extends javax.swing.JFrame {
         VerCalificaciones cali = new VerCalificaciones();
         cali.setVisible(true);
     }//GEN-LAST:event_sub_ver_califActionPerformed
+
+    private void sub_ver_materiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sub_ver_materiaActionPerformed
+        this.dispose();
+        VerMaterias verMateria = new VerMaterias();
+        verMateria.setVisible(true);
+    }//GEN-LAST:event_sub_ver_materiaActionPerformed
+
+    private void editarRubricaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarRubricaActionPerformed
+        this.dispose();
+        EditarRubrica editarRubricas = new EditarRubrica();
+        editarRubricas.setVisible(true);
+    }//GEN-LAST:event_editarRubricaActionPerformed
 
     /**
      * @param args the command line arguments

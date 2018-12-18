@@ -212,75 +212,75 @@ public class Consultas {
         return data;
     }
 
-    public Object [][] getVerRubricas(){
-      int registros = 0;
-      //obtenemos la cantidad de registros existentes en la tabla
-      try{         
-         PreparedStatement pstm = con.getConnection().prepareStatement(
-                 "SELECT count(id_unidad) as total FROM rubrica ");
-          try (ResultSet res = pstm.executeQuery()) {
-              res.next();
-              registros = res.getInt("total");
-          }
-      }catch(SQLException e){
-         System.out.println(e);
-      }    
-       
-      Object[][] data = new String[registros][15];  
-    //realizamos la consulta sql y llenamos los datos en "Object"
-      try{    
-         PreparedStatement pstm = con.getConnection().prepareStatement("SELECT " +
-            " id_unidad, id_materia, nombreMateria, anioMateria, periodo, valor1, cal1val1, valor2, cal2val2, valor3, cal3val3, valor4, cal4val4, valor5, cal5val5" +
-            " FROM rubrica" +
-            " ORDER BY nombreMateria ");
-         ResultSet res = pstm.executeQuery();
-         int i = 0;
-         while(res.next()){
-            String val1 = res.getString("valor1");
-            String cal1val1 = res.getString("cal1val1");
-            String val2 = res.getString("valor2");
-            String cal2val2 = res.getString("cal2val2");
-            String val3 = res.getString("valor3");
-            String cal3val3 = res.getString("cal3val3");
-            String valor4 = res.getString("valor4");
-            String cal4val4 = res.getString("cal4val4");
-            String valor5 = res.getString("valor5");
-            String cal5val5 = res.getString("cal5val5");
-            String idUnidad = res.getString("id_unidad");
-            String idMateria = res.getString("id_materia");
-            String nomMateria = res.getString("nombreMateria");
-            String anioMateria = res.getString("anioMateria");
-            String periodo = res.getString("periodo");
-            data[i][0] = idUnidad; 
-            data[i][1] = idMateria; 
-            data[i][2] = nomMateria; 
-            data[i][3] = anioMateria; 
-            data[i][4] = periodo; 
-            data[i][5] = val1;            
-            data[i][6] = cal1val1;            
-            data[i][7] = val2;                     
-            data[i][8] = cal2val2; 
-            data[i][9] = val3; 
-            data[i][10] = cal3val3; 
-            data[i][11] = valor4; 
-            data[i][12] = cal4val4; 
-            data[i][13] = valor5; 
-            data[i][14] = cal5val5; 
-            i++;
-         }
-         res.close();
-          }catch(SQLException e){
-         System.out.println(e);
+    public Object[][] getVerRubricas() {
+        int registros = 0;
+        //obtenemos la cantidad de registros existentes en la tabla
+        try {
+            PreparedStatement pstm = con.getConnection().prepareStatement(
+                    "SELECT count(id_unidad) as total FROM rubrica ");
+            try (ResultSet res = pstm.executeQuery()) {
+                res.next();
+                registros = res.getInt("total");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        Object[][] data = new String[registros][15];
+        //realizamos la consulta sql y llenamos los datos en "Object"
+        try {
+            PreparedStatement pstm = con.getConnection().prepareStatement("SELECT "
+                    + " id_unidad, id_materia, nombreMateria, anioMateria, periodo, valor1, cal1val1, valor2, cal2val2, valor3, cal3val3, valor4, cal4val4, valor5, cal5val5"
+                    + " FROM rubrica"
+                    + " ORDER BY nombreMateria ");
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while (res.next()) {
+                String val1 = res.getString("valor1");
+                String cal1val1 = res.getString("cal1val1");
+                String val2 = res.getString("valor2");
+                String cal2val2 = res.getString("cal2val2");
+                String val3 = res.getString("valor3");
+                String cal3val3 = res.getString("cal3val3");
+                String valor4 = res.getString("valor4");
+                String cal4val4 = res.getString("cal4val4");
+                String valor5 = res.getString("valor5");
+                String cal5val5 = res.getString("cal5val5");
+                String idUnidad = res.getString("id_unidad");
+                String idMateria = res.getString("id_materia");
+                String nomMateria = res.getString("nombreMateria");
+                String anioMateria = res.getString("anioMateria");
+                String periodo = res.getString("periodo");
+                data[i][0] = idUnidad;
+                data[i][1] = idMateria;
+                data[i][2] = nomMateria;
+                data[i][3] = anioMateria;
+                data[i][4] = periodo;
+                data[i][5] = val1;
+                data[i][6] = cal1val1;
+                data[i][7] = val2;
+                data[i][8] = cal2val2;
+                data[i][9] = val3;
+                data[i][10] = cal3val3;
+                data[i][11] = valor4;
+                data[i][12] = cal4val4;
+                data[i][13] = valor5;
+                data[i][14] = cal5val5;
+                i++;
+            }
+            res.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return data;
     }
-    return data;
- }
-    
+
     public void insetarRubrica(String unidad, String grupo, String materia, String anio, String periodo, String valor1, String ponderacion1, String valor2, String ponderacion2, String valor3, String ponderacion3, String valor4, String ponderacion4, String valor5, String ponderacion5) {
         try {
             try (PreparedStatement pstm = con.getConnection().prepareStatement("insert into "
                     + "rubrica (valor1, cal1val1, valor2, cal2val2, valor3, cal3val3, valor4, cal4val4, valor5, cal5val5, id_unidad, id_materia, nombreMateria, anioMateria, periodo)"
                     + " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)")) {
-                
+
                 pstm.setString(1, valor1);
                 pstm.setString(2, ponderacion1);
                 pstm.setString(3, valor2);
@@ -303,7 +303,7 @@ public class Consultas {
             e.printStackTrace();
         }
     }
-    
+
     public Object[][] getCalificaciones(String idGrupo, String nombreMateria, String anio, String periodo) {
         int registros = 0;
         //obtenemos la cantidad de registros existentes en la tabla
@@ -324,7 +324,7 @@ public class Consultas {
             PreparedStatement pstm = con.getConnection().prepareStatement("SELECT "
                     + " numeroControl, id_unidad, clave_materia, nombreMateria, anio, periodo, calificacion "
                     + " FROM unidad where clave_materia = '" + idGrupo + "' and nombreMateria = '" + nombreMateria
-                    + "' and anio = '"+ anio +"' and periodo = '"+ periodo +"' ORDER BY numeroControl ");
+                    + "' and anio = '" + anio + "' and periodo = '" + periodo + "' ORDER BY numeroControl ");
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while (res.next()) {
@@ -350,51 +350,87 @@ public class Consultas {
         }
         return data;
     }
-    
-    public Object [][] getVerMaterias(){
-      int registros = 0;
-      //obtenemos la cantidad de registros existentes en la tabla
-      try{         
-         PreparedStatement pstm = con.getConnection().prepareStatement(
-                 "SELECT count(id_materia) as total FROM materia ");
-          try (ResultSet res = pstm.executeQuery()) {
-              res.next();
-              registros = res.getInt("total");
-          }
-      }catch(SQLException e){
-         System.out.println(e);
-      }    
-       
-      Object[][] data = new String[registros][7];  
-    //realizamos la consulta sql y llenamos los datos en "Object"
-      try{    
-         PreparedStatement pstm = con.getConnection().prepareStatement("SELECT " +
-            " id_materia, nombre, anio, periodo, numeroUnidades, hora, CURP_profesor" +
-            " FROM materia" +
-            " ORDER BY nombre ");
-         ResultSet res = pstm.executeQuery();
-         int i = 0;
-         while(res.next()){
-            String idMateria = res.getString("id_materia");
-            String nombre = res.getString("nombre");
-            String anio = res.getString("anio");
-            String periodo = res.getString("periodo");
-            String numUni = res.getString("numeroUnidades");
-            String hora = res.getString("hora");
-            String curp = res.getString("CURP_profesor");
-            data[i][0] = idMateria; 
-            data[i][1] = nombre; 
-            data[i][2] = anio; 
-            data[i][3] = periodo; 
-            data[i][4] = numUni; 
-            data[i][5] = hora;            
-            data[i][6] = curp;
-            i++;
-         }
-         res.close();
-          }catch(SQLException e){
-         System.out.println(e);
+
+    public Object[][] getVerMaterias() {
+        int registros = 0;
+        //obtenemos la cantidad de registros existentes en la tabla
+        try {
+            PreparedStatement pstm = con.getConnection().prepareStatement(
+                    "SELECT count(id_materia) as total FROM materia ");
+            try (ResultSet res = pstm.executeQuery()) {
+                res.next();
+                registros = res.getInt("total");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        Object[][] data = new String[registros][7];
+        //realizamos la consulta sql y llenamos los datos en "Object"
+        try {
+            PreparedStatement pstm = con.getConnection().prepareStatement("SELECT "
+                    + " id_materia, nombre, anio, periodo, numeroUnidades, hora, CURP_profesor"
+                    + " FROM materia"
+                    + " ORDER BY nombre ");
+            ResultSet res = pstm.executeQuery();
+            int i = 0;
+            while (res.next()) {
+                String idMateria = res.getString("id_materia");
+                String nombre = res.getString("nombre");
+                String anio = res.getString("anio");
+                String periodo = res.getString("periodo");
+                String numUni = res.getString("numeroUnidades");
+                String hora = res.getString("hora");
+                String curp = res.getString("CURP_profesor");
+                data[i][0] = idMateria;
+                data[i][1] = nombre;
+                data[i][2] = anio;
+                data[i][3] = periodo;
+                data[i][4] = numUni;
+                data[i][5] = hora;
+                data[i][6] = curp;
+                i++;
+            }
+            res.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return data;
     }
-    return data;
- }
+
+    public void updateRubrica(String nom1, String val1, String nom2, String val2, String nom3, String val3, String nom4, String val4, String nom5, String val5, String idUnidad, String idMateria, String nombreMateria,String anioMateria, String periodo) {
+        try {
+            PreparedStatement pstm = con.getConnection().prepareStatement("update rubrica "
+                    + "set valor1 = ? ,"
+                    + "cal1val1 = ? ,"
+                    + "valor2 = ? ,"
+                    + "cal2val2 = ? ,"
+                    + "valor3 = ? ,"
+                    + "cal3val3 = ? ,"
+                    + "valor4 = ? ,"
+                    + "cal4val4 = ? ,"
+                    + "valor5 = ? ,"
+                    + "cal5val5 = ? "
+                    + "where id_unidad = ? and id_materia = ? and nombreMateria = ? and anioMateria = ? and periodo = ?");
+            pstm.setString(1, nom1);
+            pstm.setString(2, val1);
+            pstm.setString(3, nom2);
+            pstm.setString(4, val2);
+            pstm.setString(5, nom3);
+            pstm.setString(6, val3);
+            pstm.setString(7, nom4);
+            pstm.setString(8, val4);
+            pstm.setString(9, nom5);
+            pstm.setString(10, val5);
+            pstm.setString(11, idUnidad);
+            pstm.setString(12, idMateria);
+            pstm.setString(13, nombreMateria);
+            pstm.setString(14, anioMateria);
+            pstm.setString(15, periodo);
+            pstm.execute();
+            pstm.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 }
